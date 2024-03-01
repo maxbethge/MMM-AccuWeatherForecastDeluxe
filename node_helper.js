@@ -8,14 +8,11 @@
   to AccuWeather will not be executed, and instead an error
   will be output the the MagicMirror log.
 
-  Additional, this module supplies two optional parameters:
+  Since AccuWeather has a very limited API quota on their free plan, there is an option to specify a second apiKey to double the quota.
 
-    units - one of "metric", "imperial"
-    lang - Any of the languages AccuWeather supports, as listed here: https://openweathermap.org/api/one-call-api#multi
+  The AccuWeather-compatible API request looks like this:
 
-  The DarkSky-compatible API request looks like this:
-
-    https://api.openweathermap.org/data/2.5/onecall?lat=LATITUDE&lon=LONGITUDE&units=XXX&lang=YY&appid=API_KEY
+    http://dataservice.accuweather.com/forecasts/v1/daily/5day/{locationKey}?apikey={apiKey}&details=true&metric={units=metric}
 
 *********************************/
 
@@ -56,6 +53,7 @@ module.exports = NodeHelper.create({
                     "/" + payload.locationKey +
                     "?apikey=" + payload.apikey +
                     "&lang=" + payload.language + 
+                    "&metric=" +  ((payload.units == "imperial") ? "false" : "true")  +
                     "&details=true";
 
 
@@ -63,6 +61,7 @@ module.exports = NodeHelper.create({
                     "/" + payload.locationKey +
                     "?apikey=" + ((payload.apikey2 == null || payload.apikey2 == "") ? payload.apikey : payload.apikey2)  +
                     "&lang=" + payload.language + 
+                    "&metric=" +  ((payload.units == "imperial") ? "false" : "true")  +
                     "&details=true";
 
 
@@ -116,7 +115,8 @@ module.exports = NodeHelper.create({
                   url = payload.endpointNow +
                     "/" + payload.locationKey +
                     "?apikey=" + payload.apikey  +
-                    "&lang=" + payload.language + 
+                    "&lang=" + payload.language +
+                    "&metric=" +  ((payload.units == "imperial") ? "false" : "true")  +
                     "&details=true";
 
                 console.log("[MMM-AccuWeatherForecastDeluxe] Getting current weather data: " + url);
@@ -174,6 +174,7 @@ module.exports = NodeHelper.create({
                     "/" + payload.locationKey +
                     "?apikey=" + payload.apikey  +
                     "&lang=" + payload.language + 
+                    "&metric=" +  ((payload.units == "imperial") ? "false" : "true")  +
                     "&details=true";
 
                 console.log("[MMM-AccuWeatherForecastDeluxe] Getting current weather data: " + url);

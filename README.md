@@ -23,10 +23,10 @@ At a minimum you need to supply the following required configuration parameters:
 You can request an API key to access data here:
 <https://developer.accuweather.com/packages>
 
-Free tier is fine -- by itself, a single instance of this module will not make any where near 1000 request on one day with the default `updateInterval` of `10`.
+Free tier is fine -- by itself, a single instance of this module will not make any where near 1000 request on one day with the default `updateInterval` of `10`. However, if the `updateInterval` is more frequent, create another Accuweather account to get a second API key and add to `apiKey2`.
 
-Find out your latitude and longitude here:
-<https://www.latlong.net/>
+Find the locationKey using the Accuweather search API
+<http://dataservice.accuweather.com/locations/v1/cities/search?apikey={apiKey}&q={cityName}>
 
 ### Sample Configuration
 
@@ -39,6 +39,7 @@ Find out your latitude and longitude here:
   disabled: false,
   config: {
     apikey: "SUPER SECRET!!!",
+    apikey2: "SUPER SECRET!!!",
     locationKey: "337209",
     hourlyForecastInterval: 2,
     maxDailiesToShow: 3,
@@ -75,7 +76,7 @@ You can use the `listenerOnly` option with multiple instances, so that only a pr
   <tbody>
     <tr>
       <td><code>endpoint</code></td>
-      <td>The URL of the onecall api; v2.5 is free, v3.0 requires a subscription and can be used with <code>https://api.openweathermap.org/data/3.0/onecall</code><br><br><strong>Type</strong> <code>String</code><br>Defaults to <code>https://api.openweathermap.org/data/2.5/onecall</code></td>
+      <td>The URL of the accuweather api; a free subscription with a limited quota and can be used with <code>http://dataservice.accuweather.com</code><br><br><strong>Type</strong> <code>String</code><br>Defaults to <code>http://dataservice.accuweather.com</code></td>
     </tr>
     <tr>
       <td><code>updateInterval</code></td>
@@ -258,7 +259,7 @@ You can use the `listenerOnly` option with multiple instances, so that only a pr
 
 ### Units & Labels
 
-While OpenWeather supports other units, thus far this module has focussed on imperial and metric. Be aware of the `unit` option above, which defaults to the units set for MagicMirror².
+Accuweather supports imperial and metric units. Be aware of the `unit` option above, which defaults to the units set for MagicMirror².
 
 If you want a space before or after the label, include it here.
 
@@ -445,8 +446,8 @@ Options for specifying the decimal precision for various measurements. OpenWeath
   disabled: false,
   config: {
     apikey: "SUPER SECRET!!!",
-    latitude: "51.506130",
-    longitude: "-0.090270",
+    apikey2: "SUPER SECRET!!!",
+    locationKey: "123456",
     relativeColors: true,
     hourlyForecastLayout: "table",
     maxHourliesToShow: 5,
@@ -476,8 +477,8 @@ Options for specifying the decimal precision for various measurements. OpenWeath
   disabled: false,
   config: {
     apikey: "SUPER SECRET!!!",
-    latitude: "51.506130",
-    longitude: "-0.090270",
+    apikey2: "SUPER SECRET!!!",
+    locationKey: "123456",
     relativeColors: true,
     showCurrentConditions: false,
     showExtraCurrentConditions: false,
@@ -511,8 +512,8 @@ Options for specifying the decimal precision for various measurements. OpenWeath
   disabled: false,
   config: {
     apikey: "SUPER SECRET!!!",
-    latitude: "51.506130",
-    longitude: "-0.090270",
+    apikey2: "SUPER SECRET!!!",
+    locationKey: "123456",
     colored: false,
     showCurrentConditions: false,
     showExtraCurrentConditions: false,
@@ -546,8 +547,8 @@ Options for specifying the decimal precision for various measurements. OpenWeath
   disabled: false,
   config: {
     apikey: "SUPER SECRET!!!",
-    latitude: "51.506130",
-    longitude: "-0.090270",
+    apikey2: "SUPER SECRET!!!",
+    locationKey: "123456",
     hourlyForecastInterval: 2,
     maxDailiesToShow: 3,
     ignoreToday: true,
