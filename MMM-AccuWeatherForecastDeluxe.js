@@ -56,8 +56,6 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
     defaults: {
         apikey: "",
         apikey2: "",
-        //latitude: "",
-        //longitude: "",
         locationKey: "",
         endpoint: "http://dataservice.accuweather.com/forecasts/v1/daily/5day",
         endpointNow: "http://dataservice.accuweather.com/currentconditions/v1",
@@ -284,21 +282,19 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         this.sendSocketNotification("ACCUWEATHER_ONE_CALL_FORECAST_GET", {
             apikey: this.config.apikey,
             apikey2: this.config.apikey2,
-            //latitude: this.config.latitude,
-            //longitude: this.config.longitude,
             locationKey: this.config.locationKey,
             units: this.config.units,
             language: this.config.language,
             instanceId: this.identifier,
             requestDelay: this.config.requestDelay,
             endpoint: this.config.endpoint,
-            endpointNow: this.config.endpointNow,
+            endpointNow: this.config.endpointNow
         });
 
     },
 
     notificationReceived: function(notification, payload, sender) {
-        //console.log(this.name, 'notificationReceived', notification, payload, sender);
+        console.log(this.name, 'notificationReceived', notification, payload, sender);
 
         if (
             this.config.listenerOnly &&
@@ -436,9 +432,10 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
 
         return {
             "currently": {
-                temperature: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.Temperature.Imperial.Value : this.weatherData.Current.Temperature.Metric.Value),
+                temperature: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.Temperature.Imperial.Value : this.weatherData.Current.Temperature.Metric.Value)),
+                //temperature: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.Temperature.Imperial.Value : this.weatherData.Current.Temperature.Metric.Value),
                 //temperature: this.getUnit('temp', this.weatherData.current.temp),
-                feelslike: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.RealFeelTemperature.Imperial.Value : this.weatherData.Current.RealFeelTemperature.Metric.Value),
+                feelslike: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.RealFeelTemperature.Imperial.Value : this.weatherData.Current.RealFeelTemperature.Metric.Value)),
                 //feelslike: this.getUnit('temp', this.weatherData.current.feels_like),
                 animatedIconId: this.config.useAnimatedIcons ? this.getAnimatedIconId() : null,
                 animatedIconName: this.convertAccuWeatherIdToIcon(this.weatherData.Current.WeatherIcon, this.weatherData.Current.WeatherText),
