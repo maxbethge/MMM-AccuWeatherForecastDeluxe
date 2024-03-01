@@ -447,9 +447,9 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
                 tempRange: this.formatHiLowTemperature(this.weatherData.DailyForecasts[0].Temperature.Maximum.Value, this.weatherData.DailyForecasts[0].Temperature.Minimum.Value),
                 precipitation: this.formatPrecipitation(null, 
                     ((this.weatherData.Current.PrecipitationType === 'Rain')? 
-                        this.weatherData.Current.PrecipitationSummary.Past12Hours.Imperial.Value  : null), 
+                        this.weatherData.Current.PrecipitationSummary.Past12Hours[this.config.unitsFormatted].Value  : null), 
                     ((this.weatherData.Current.PrecipitationType === 'Snow')? 
-                        this.weatherData.Current.PrecipitationSummary.Past12Hours.Imperial.Value  : null)),
+                        this.weatherData.Current.PrecipitationSummary.Past12Hours[this.config.unitsFormatted].Value  : null)),
                /*
                         precipitation: this.formatPrecipitation(null, 
                     ((this.weatherData.Current.PrecipitationType === 'Rain')? 
@@ -460,9 +460,9 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
                 //precipitation: this.formatPrecipitation(null, this.weatherData.current.rain, this.weatherData.current.snow),
                 //wind: this.formatWind(0, 0, 0),
                 wind: this.formatWind(
-                    this.weatherData.Current.Wind.Speed.Imperial.Value, 
+                    this.weatherData.Current.Wind.Speed[this.config.unitsFormatted].Value, 
                     this.weatherData.Current.Wind.Direction.Degrees, 
-                    this.weatherData.Current.WindGust.Speed.Imperial.Value
+                    this.weatherData.Current.WindGust.Speed[this.config.unitsFormatted].Value
                 ),
                 /*
                 wind: this.formatWind(
