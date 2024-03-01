@@ -429,6 +429,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             }
 
         }
+        console.log("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  unitsFormatted: " + this.config.unitsFormatted );
 
         return {
             "currently": {

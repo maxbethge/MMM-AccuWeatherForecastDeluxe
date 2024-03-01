@@ -72,7 +72,7 @@ module.exports = NodeHelper.create({
                     console.log("[MMM-AccuWeatherForecastDeluxe] Getting data: " + url);
                     const resp1 = await fetch(url);
                     const json1 = await resp1.json();
-                    console.log("[MMM-AccuWeatherForecastDeluxe] url data: " +json1);
+                    console.log("[MMM-AccuWeatherForecastDeluxe] url data: " + JSON.stringify(json1) );
                     //console.log("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  " + json1);
                     f = json1;
                     f.instanceId = payload.instanceId;
@@ -80,10 +80,10 @@ module.exports = NodeHelper.create({
                     console.log("[MMM-AccuWeatherForecastDeluxe] Getting data: " + url2);
                     const resp2 = await fetch(url2);
                     const json2 = await resp2.json();
-                    console.log("[MMM-AccuWeatherForecastDeluxe] url2 data: " +json2);
+                    console.log("[MMM-AccuWeatherForecastDeluxe] url2 data: " + JSON.stringify(json2) );
                     f.Current = json2[0];                    
                     //console.error("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  after 2");
-                    console.log("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  " + f);
+                    //console.log("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  " + f);
                     self.sendSocketNotification("ACCUWEATHER_ONE_CALL_FORECAST_DATA", f);
                     console.log("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  after sendSocketNotification");
                   })().catch(function (error) {
