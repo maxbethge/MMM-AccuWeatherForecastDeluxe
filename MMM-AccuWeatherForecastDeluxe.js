@@ -273,7 +273,6 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         // Add uppercased units for field selection in node_helper.js
         this.config.unitsFormatted = this.config.units.charAt(0).toUpperCase() + this.config.units.slice(1);
         Log.info("[MMM-AccuWeatherForecastDeluxe] " + "  unitsFormatted: " + this.config.unitsFormatted);
-        console.log("[MMM-AccuWeatherForecastDeluxe] " + "  unitsFormatted: " + this.config.unitsFormatted);
 
         Log.info("Done starting module: " + this.name);
     },
@@ -434,9 +433,10 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         return {
             "currently": {
                 //temperature: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.Temperature.Imperial.Value : this.weatherData.Current.Temperature.Metric.Value)),
-                temperature: this.getUnit('temp', this.weatherData.Current.Temperature.Imperial.Value),
+                temperature: this.getUnit('temp', this.weatherData.Current.Temperature.[this.config.unitsFormatted].Value),
+                //temperature: this.getUnit('temp', this.weatherData.Current.Temperature.Imperial.Value),
                 //temperature: this.getUnit('temp', this.weatherData.current.temp),
-                feelslike: this.getUnit('temp', this.weatherData.Current.RealFeelTemperature.Imperial.Value),
+                feelslike: this.getUnit('temp', this.weatherData.Current.RealFeelTemperature.[this.config.unitsFormatted].Value),
                 //feelslike: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.RealFeelTemperature.Imperial.Value : this.weatherData.Current.RealFeelTemperature.Metric.Value)),
                 //feelslike: this.getUnit('temp', this.weatherData.current.feels_like),
                 animatedIconId: this.config.useAnimatedIcons ? this.getAnimatedIconId() : null,
