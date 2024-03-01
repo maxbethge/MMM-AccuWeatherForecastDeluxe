@@ -85,10 +85,10 @@ module.exports = NodeHelper.create({
                     //console.error("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  after 2");
                     //console.log("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  " + f);
                     self.sendSocketNotification("ACCUWEATHER_ONE_CALL_FORECAST_DATA", f);
-                    console.log("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  after sendSocketNotification");
+                    console.log("[MMM-AccuWeatherForecastDeluxe] " + "  after sendSocketNotification");
                   })().catch(function (error) {
                     // if there's an error, log it
-                    console.error("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** " + error);
+                    console.error("[MMM-AccuWeatherForecastDeluxe] " + " ** ERROR ** " + error);
                 });
 
                 /*

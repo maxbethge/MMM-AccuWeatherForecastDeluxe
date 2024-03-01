@@ -272,8 +272,8 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
 
         // Add uppercased units for field selection in node_helper.js
         this.config.unitsFormatted = this.config.units.charAt(0).toUpperCase() + this.config.units.slice(1);
-        Log.info("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  unitsFormatted: " + this.config.unitsFormatted);
-        console.log("[MMM-AccuWeatherForecastDeluxe] " + moment().format("D-MMM-YY HH:mm") + "  unitsFormatted: " + this.config.unitsFormatted);
+        Log.info("[MMM-AccuWeatherForecastDeluxe] " + "  unitsFormatted: " + this.config.unitsFormatted);
+        console.log("[MMM-AccuWeatherForecastDeluxe] " + "  unitsFormatted: " + this.config.unitsFormatted);
 
         Log.info("Done starting module: " + this.name);
     },
