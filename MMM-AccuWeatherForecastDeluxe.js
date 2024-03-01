@@ -432,10 +432,11 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
 
         return {
             "currently": {
-                temperature: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.Temperature.Imperial.Value : this.weatherData.Current.Temperature.Metric.Value)),
-                //temperature: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.Temperature.Imperial.Value : this.weatherData.Current.Temperature.Metric.Value),
+                //temperature: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.Temperature.Imperial.Value : this.weatherData.Current.Temperature.Metric.Value)),
+                temperature: this.getUnit('temp', this.weatherData.Current.Temperature.Imperial.Value),
                 //temperature: this.getUnit('temp', this.weatherData.current.temp),
-                feelslike: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.RealFeelTemperature.Imperial.Value : this.weatherData.Current.RealFeelTemperature.Metric.Value)),
+                feelslike: this.getUnit('temp', this.weatherData.Current.RealFeelTemperature.Imperial.Value),
+                //feelslike: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.RealFeelTemperature.Imperial.Value : this.weatherData.Current.RealFeelTemperature.Metric.Value)),
                 //feelslike: this.getUnit('temp', this.weatherData.current.feels_like),
                 animatedIconId: this.config.useAnimatedIcons ? this.getAnimatedIconId() : null,
                 animatedIconName: this.convertAccuWeatherIdToIcon(this.weatherData.Current.WeatherIcon, this.weatherData.Current.WeatherText),
@@ -445,16 +446,30 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
                 tempRange: this.formatHiLowTemperature(this.weatherData.DailyForecasts[0].Temperature.Maximum.Value, this.weatherData.DailyForecasts[0].Temperature.Minimum.Value),
                 precipitation: this.formatPrecipitation(null, 
                     ((this.weatherData.Current.PrecipitationType === 'Rain')? 
+                        this.weatherData.Current.PrecipitationSummary.Past12Hours.Imperial.Value  : null), 
+                    ((this.weatherData.Current.PrecipitationType === 'Snow')? 
+                        this.weatherData.Current.PrecipitationSummary.Past12Hours.Imperial.Value  : null)),
+               /*
+                        precipitation: this.formatPrecipitation(null, 
+                    ((this.weatherData.Current.PrecipitationType === 'Rain')? 
                         ((this.config.units == "imperial")? this.weatherData.Current.PrecipitationSummary.Past12Hours.Imperial.Value : this.weatherData.Current.PrecipitationSummary.Past12Hours.Metric.Value) : null), 
                     ((this.weatherData.Current.PrecipitationType === 'Snow')? 
                         ((this.config.units == "imperial")? this.weatherData.Current.PrecipitationSummary.Past12Hours.Imperial.Value : this.weatherData.Current.PrecipitationSummary.Past12Hours.Metric.Value) : null)),
+                        */
                 //precipitation: this.formatPrecipitation(null, this.weatherData.current.rain, this.weatherData.current.snow),
                 //wind: this.formatWind(0, 0, 0),
+                wind: this.formatWind(
+                    this.weatherData.Current.Wind.Speed.Imperial.Value, 
+                    this.weatherData.Current.Wind.Direction.Degrees, 
+                    this.weatherData.Current.WindGust.Speed.Imperial.Value
+                ),
+                /*
                 wind: this.formatWind(
                     ((this.config.units == "imperial")? this.weatherData.Current.Wind.Speed.Imperial.Value : this.weatherData.Current.Wind.Speed.Metric.Value), 
                     this.weatherData.Current.Wind.Direction.Degrees, 
                     ((this.config.units == "imperial")? this.weatherData.Current.WindGust.Speed.Imperial.Value : this.weatherData.Current.WindGust.Speed.Metric.Value)
                 ),
+                */
             },
             "summary": summary,
             "hourly": hourlies,
