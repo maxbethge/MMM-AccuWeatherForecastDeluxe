@@ -270,7 +270,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             
         }
 
-        // Add uppercased units for field selection in node_helper.js
+        // Add formatted units value for field selection in node_helper.js; 'imperial' --> 'Imperial', 'metric' --> 'Metric'
         this.config.unitsFormatted = this.config.units.charAt(0).toUpperCase() + this.config.units.slice(1);
         Log.info("[MMM-AccuWeatherForecastDeluxe] " + "  unitsFormatted: " + this.config.unitsFormatted);
 
@@ -432,17 +432,10 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
 
         return {
             "currently": {
-                //temperature: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.Temperature.Imperial.Value : this.weatherData.Current.Temperature.Metric.Value)),
                 temperature: this.getUnit('temp', this.weatherData.Current.Temperature[this.config.unitsFormatted].Value),
-                //temperature: this.getUnit('temp', this.weatherData.Current.Temperature.Imperial.Value),
-                //temperature: this.getUnit('temp', this.weatherData.current.temp),
                 feelslike: this.getUnit('temp', this.weatherData.Current.RealFeelTemperature[this.config.unitsFormatted].Value),
-                //feelslike: this.getUnit('temp', ((this.config.units == "imperial")? this.weatherData.Current.RealFeelTemperature.Imperial.Value : this.weatherData.Current.RealFeelTemperature.Metric.Value)),
-                //feelslike: this.getUnit('temp', this.weatherData.current.feels_like),
                 animatedIconId: this.config.useAnimatedIcons ? this.getAnimatedIconId() : null,
                 animatedIconName: this.convertAccuWeatherIdToIcon(this.weatherData.Current.WeatherIcon, this.weatherData.Current.WeatherText),
-                //animatedIconName: this.convertAccuWeatherIdToIcon(this.weatherData.current.weather[0].id, this.weatherData.current.weather[0].icon),
-                //iconPath: this.generateIconSrc(this.convertAccuWeatherIdToIcon(this.weatherData.current.weather[0].id, this.weatherData.current.weather[0].icon), true),
                 iconPath: this.generateIconSrc(this.convertAccuWeatherIdToIcon(this.weatherData.DailyForecasts[0].Day.Icon, this.weatherData.DailyForecasts[0].Day.IconPhrase), true),
                 tempRange: this.formatHiLowTemperature(this.weatherData.DailyForecasts[0].Temperature.Maximum.Value, this.weatherData.DailyForecasts[0].Temperature.Minimum.Value),
                 precipitation: this.formatPrecipitation(null, 
@@ -450,27 +443,11 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
                         this.weatherData.Current.PrecipitationSummary.Past12Hours[this.config.unitsFormatted].Value  : null), 
                     ((this.weatherData.Current.PrecipitationType === 'Snow')? 
                         this.weatherData.Current.PrecipitationSummary.Past12Hours[this.config.unitsFormatted].Value  : null)),
-               /*
-                        precipitation: this.formatPrecipitation(null, 
-                    ((this.weatherData.Current.PrecipitationType === 'Rain')? 
-                        ((this.config.units == "imperial")? this.weatherData.Current.PrecipitationSummary.Past12Hours.Imperial.Value : this.weatherData.Current.PrecipitationSummary.Past12Hours.Metric.Value) : null), 
-                    ((this.weatherData.Current.PrecipitationType === 'Snow')? 
-                        ((this.config.units == "imperial")? this.weatherData.Current.PrecipitationSummary.Past12Hours.Imperial.Value : this.weatherData.Current.PrecipitationSummary.Past12Hours.Metric.Value) : null)),
-                        */
-                //precipitation: this.formatPrecipitation(null, this.weatherData.current.rain, this.weatherData.current.snow),
-                //wind: this.formatWind(0, 0, 0),
                 wind: this.formatWind(
                     this.weatherData.Current.Wind.Speed[this.config.unitsFormatted].Value, 
                     this.weatherData.Current.Wind.Direction.Degrees, 
                     this.weatherData.Current.WindGust.Speed[this.config.unitsFormatted].Value
                 ),
-                /*
-                wind: this.formatWind(
-                    ((this.config.units == "imperial")? this.weatherData.Current.Wind.Speed.Imperial.Value : this.weatherData.Current.Wind.Speed.Metric.Value), 
-                    this.weatherData.Current.Wind.Direction.Degrees, 
-                    ((this.config.units == "imperial")? this.weatherData.Current.WindGust.Speed.Imperial.Value : this.weatherData.Current.WindGust.Speed.Metric.Value)
-                ),
-                */
             },
             "summary": summary,
             "hourly": hourlies,
@@ -513,8 +490,6 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         if (type == "hourly") { //just display projected temperature for that hour
             fItem.temperature = this.getUnit('temp',fData.temp);
         } else { //display High / Low temperatures
-            //console.log(this.name, 'high/low', fData);
-            //console.log(this.name, 'high/low', JSON.stringify(fData));
             fItem.tempRange = this.formatHiLowTemperature(fData.Temperature.Maximum.Value, fData.Temperature.Minimum.Value);
             
             fItem.bars = {
@@ -577,55 +552,15 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             accumulationtype = "snow";
             if (typeof snowAccumulation === "number") {
                 accumulation = this.getUnit('snow', snowAccumulation);
-                /*
-                switch (this.config.units) {
-                    case 'imperial':
-                        accumulation = this.getUnit('snow', snowAccumulation/25.4);
-                        break;
-                    case 'metric':
-                        accumulation = this.getUnit('snow', snowAccumulation);
-                        break;
-                }
-                */
             } else if (typeof snowAccumulation === "object" && snowAccumulation["1h"]) {
                 accumulation = this.getUnit('snow', snowAccumulation["1h"]);
-                /*
-                switch (this.config.units) {
-                    case 'imperial':
-                        accumulation = this.getUnit('snow', snowAccumulation["1h"]/25.4);
-                        break;
-                    case 'metric':
-                        accumulation = this.getUnit('snow', snowAccumulation["1h"]);
-                        break;
-                }
-                */
             }
         } else if (rainAccumulation) {
             accumulationtype = "rain";
             if (typeof rainAccumulation === "number") {
                 accumulation = this.getUnit('rain', rainAccumulation);
-                /*
-                switch (this.config.units) {
-                    case 'imperial':
-                        accumulation = this.getUnit('rain', rainAccumulation/25.4);
-                        break;
-                    case 'metric':
-                        accumulation = this.getUnit('rain', rainAccumulation);
-                        break;
-                }
-                */
             } else if (typeof rainAccumulation === "object" && rainAccumulation["1h"]) {
                 accumulation = this.getUnit('rain', rainAccumulation["1h"]);
-                /*
-                switch (this.config.units) {
-                    case 'imperial':
-                        accumulation = this.getUnit('rain', rainAccumulation["1h"]/25.4);
-                        break;
-                    case 'metric':
-                        accumulation = this.getUnit('rain', rainAccumulation["1h"]);
-                        break;
-                }
-                */
             }
         }
 
