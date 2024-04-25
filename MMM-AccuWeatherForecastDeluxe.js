@@ -39,6 +39,7 @@
   By Jeff Clarke
   Modified by Dirk Rettschlag
   Modified by Max Bethge
+  Modified by Adam Garrett
   MIT Licensed
 
 *********************************/
@@ -388,7 +389,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             var displayCounter = 0;
             var currentIndex = this.config.hourlyForecastInterval;
             while (displayCounter < this.config.maxHourliesToShow) {
-                if (this.weatherData.hourly[currentIndex] == null) {
+                if (typeof this.weatherData.hourly == 'undefined' || this.weatherData.hourly[currentIndex] == null) {
                     break;
                 }
 
