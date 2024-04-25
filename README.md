@@ -1,5 +1,9 @@
 # MMM-AccuWeatherForecastDeluxe
 
+
+This is a fork to attempt to correct the hourly forecast.
+
+
 This is a [MagicMirror²](https://magicmirror.builders) module that displays current, hourly and daily forecast information using data from the [AccuWeather](https://www.accuweather.com).
 
 | Tiled Layouts | Bars Layout (daily forecast only) |
@@ -9,7 +13,7 @@ This is a [MagicMirror²](https://magicmirror.builders) module that displays cur
 ## Installation
 
 1. Navigate into your MagicMirror's `modules` folder and execute
-   `git clone https://github.com/maxbethge/MMM-AccuWeatherForecastDeluxe`.
+   `git clone https://github.com/BigBot89/MMM-AccuWeatherForecastDeluxe`.
 2. Enter the new `MMM-AccuWeatherForecastDeluxe` directory and execute
    `npm install`.
 
