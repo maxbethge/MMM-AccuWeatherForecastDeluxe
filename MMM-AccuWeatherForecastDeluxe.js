@@ -60,6 +60,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         locationKey: "",
         endpoint: "http://dataservice.accuweather.com/forecasts/v1/daily/5day",
         endpointNow: "http://dataservice.accuweather.com/currentconditions/v1",
+        endpointHourly: "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour",
         updateInterval: 60, // minutes
         updateFadeSpeed: 500, // milliseconds
         requestDelay: 0,
@@ -288,7 +289,8 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             instanceId: this.identifier,
             requestDelay: this.config.requestDelay,
             endpoint: this.config.endpoint,
-            endpointNow: this.config.endpointNow
+            endpointNow: this.config.endpointNow,
+            endpointHourly: this.config.endpointHourly
         });
 
     },
