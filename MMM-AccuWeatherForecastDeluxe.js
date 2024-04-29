@@ -125,8 +125,8 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         label_wind_m: " m/s",
         label_gust_i: " mph",
         label_gust_m: " m/s",
-        label_no_precip: "—",
-        label_no_wind: "—",
+        label_no_precip: "0%",
+        label_no_wind: "0 mph",
         label_precip_separator: " ",
         label_gust_wrapper_prefix: " (",
         label_gust_wrapper_suffix: ")",
@@ -461,14 +461,29 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
     /*
       Hourly and Daily forecast items are no longer similar. Two routines are needed.
      */
+     
+     // Hourly Function
 	forecastItemFactoryH: function(fDataH, type) {
 		var fItemH = new Object();
+		
 		fItemH.time = moment(fDataH.EpochDateTime * 1000).format(this.config.label_timeFormat);
 		fItemH.temperature = this.getUnit('temp',fDataH.Temperature.Value); //just display projected temperature for that hour
-		
+
+        // --------- Precipitation ---------
+        var precipProbability = fDataH.PrecipitationProbability;
+        precipProbability = (precipProbability > 0) ? (precipProbability / 100) : precipProbability;
+        
+        var rainValue = fDataH.Rain.Value;
+        var snowValue = fDataH.Snow.Value;
+        fItemH.precipitation = this.formatPrecipitation(precipProbability, rainValue, snowValue);
+        
+		// --------- Wind ---------
+        fItemH.wind = (this.formatWind(fDataH.Wind.Speed.Value, fDataH.Wind.Direction.Degrees, fDataH.WindGust.Speed.Value));
+
 		return fItemH;
 	},
 	
+	// Daily and Currently function
     forecastItemFactory: function(fData, type, index = null, min = null, max = null) {
 
         var fItem = new Object();
