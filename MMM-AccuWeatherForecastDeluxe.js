@@ -459,8 +459,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
     },
 
     /*
-      Hourly and Daily forecast items are very similar.  So one routine builds the data
-      objects for both.
+      Hourly and Daily forecast items are no longer similar. Two routines are needed.
      */
 	forecastItemFactoryH: function(fDataH, type) {
 		var fItemH = new Object();
