@@ -391,11 +391,11 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             var displayCounter = 0;
             var currentIndex = this.config.hourlyForecastInterval;
             while (displayCounter < this.config.maxHourliesToShow) {
-                if (typeof this.weatherData.hourly == 'undefined' || this.weatherData.hourly[currentIndex] == null) {
+                if (typeof this.weatherData.Hourly == 'undefined' || this.weatherData.Hourly[currentIndex] == null) {
                     break;
                 }
 
-                hourlies.push(this.forecastItemFactory(this.weatherData.hourly[currentIndex], "hourly"));
+                hourlies.push(this.forecastItemFactoryH(this.weatherData.Hourly[currentIndex], "hourly"));
 
                 currentIndex += this.config.hourlyForecastInterval;
                 displayCounter++;
@@ -458,11 +458,18 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         };
     },
 
-
     /*
       Hourly and Daily forecast items are very similar.  So one routine builds the data
       objects for both.
      */
+	forecastItemFactoryH: function(fDataH, type) {
+		var fItemH = new Object();
+		fItemH.time = moment(fDataH.EpochDateTime * 1000).format(this.config.label_timeFormat);
+		fItemH.temperature = this.getUnit('temp',fDataH.Temperature.Value); //just display projected temperature for that hour
+		
+		return fItemH;
+	},
+	
     forecastItemFactory: function(fData, type, index = null, min = null, max = null) {
 
         var fItem = new Object();
@@ -476,10 +483,6 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             else if (index === 1 && this.config.showDayAsTomorrowInDailyForecast) fItem.day = this.config.label_tomorrow;
             else fItem.day = this.config.label_days[moment(fData.EpochDate * 1000).format("d")];
 
-        } else { //hourly
-
-            //time (e.g.: "5 PM")
-            fItem.time = moment(fData.EpochDate * 1000).format(this.config.label_timeFormat);
         }
 
         // --------- Icon ---------
@@ -488,11 +491,9 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             fItem.animatedIconName = this.convertAccuWeatherIdToIcon(fData.Day.Icon, fData.Day.IconPhrase);
         }
         fItem.iconPath = this.generateIconSrc(this.convertAccuWeatherIdToIcon(fData.Day.Icon, fData.Day.IconPhrase));
-
+		console.log(fData);
         // --------- Temperature ---------
-        if (type == "hourly") { //just display projected temperature for that hour
-            fItem.temperature = this.getUnit('temp',fData.temp);
-        } else { //display High / Low temperatures
+		//display High / Low temperatures
             fItem.tempRange = this.formatHiLowTemperature(fData.Temperature.Maximum.Value, fData.Temperature.Minimum.Value);
             
             fItem.bars = {
@@ -514,7 +515,6 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             
             fItem.colorStart = '#' + this.interpolateColor(colorLo, colorHi, colorStartPos);
             fItem.colorEnd = '#' + this.interpolateColor(colorLo, colorHi, colorEndPos);
-        }
 
         // --------- Precipitation ---------
 //TODO: get max value from day/night
