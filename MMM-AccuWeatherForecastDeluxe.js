@@ -480,6 +480,14 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
 		// --------- Wind ---------
         fItemH.wind = (this.formatWind(fDataH.Wind.Speed.Value, fDataH.Wind.Direction.Degrees, fDataH.WindGust.Speed.Value));
 
+		// --------- Icon ---------
+        if (this.config.useAnimatedIcons && !this.config.animateMainIconOnly) {
+            fItemH.animatedIconId = this.getAnimatedIconId();
+            fItemH.animatedIconName = this.convertAccuWeatherIdToIcon(fDataH.WeatherIcon, fDataH.IconPhrase);
+        }
+        fItemH.iconPath = this.generateIconSrc(this.convertAccuWeatherIdToIcon(fDataH.WeatherIcon, fDataH.IconPhrase));
+		console.log(fDataH);
+		
 		return fItemH;
 	},
 	
