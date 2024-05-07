@@ -595,6 +595,9 @@ to be coloured<br />
 **Weather Icons by Thom**<br />
 (Designed for DuckDuckGo)<br />
 <https://dribbble.com/shots/1832162-Weather-Icons>
+	
+**Fire Icon by RemixIcon<br />
+<https://www.iconfinder.com/remix-icon>
 
 Sets 4 and 5 were found on Graphberry, but I couldn't find
 the original artists.<br />
