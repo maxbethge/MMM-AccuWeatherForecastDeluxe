@@ -719,7 +719,8 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             return "partly-cloudy-night";
         } else if ([37,38].includes(id)) {
             return "cloudy";
-       // } else if (id >= 800 && id < 810) {
+        } else if ([32].includes(id)) {
+            return "wind";
         } else {
             return "";
         }
