@@ -23,7 +23,7 @@ At a minimum you need to supply the following required configuration parameters:
 You can request an API key to access data here:
 <https://developer.accuweather.com/packages>
 
-Free tier is fine -- by itself, a single instance of this module will not make any where near 1000 request on one day with the default `updateInterval` of `10`. However, if the `updateInterval` is more frequent, create another Accuweather account to get a second API key and add to `apiKey2`.
+Free tier is fine -- by itself, a single instance of this module will not make any where near 50 request on one day with the default `updateInterval` of `60`. However, if the `updateInterval` is more frequent, create another Accuweather account to get a second API key and add to `apiKey2`.
 
 Find the locationKey using the Accuweather search API
 <http://dataservice.accuweather.com/locations/v1/cities/search?apikey={apiKey}&q={cityName}>
@@ -609,6 +609,6 @@ the original artists.<br />
 Some of the icons were modified to better work with the module's
 structure and aesthetic.
 
-**Weather data provided by OpenWeather**<br />
+**Weather data provided by AccuWeather**<br />
 <https://www.accuweather.com>
 
