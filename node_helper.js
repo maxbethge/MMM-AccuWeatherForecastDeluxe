@@ -48,6 +48,7 @@ module.exports = NodeHelper.create({
                     "/" + payload.locationKey +
                     "?apikey=" + ((payload.apikey2 == null || payload.apikey2 == "") ? payload.apikey : payload.apikey2)  +
                     "&lang=" + payload.language + 
+                    "&metric=" +  ((payload.units == "imperial") ? "false" : "true")  +
                     "&details=true";
 
                 (async () => {
