@@ -39,6 +39,7 @@
   By Jeff Clarke
   Modified by Dirk Rettschlag
   Modified by Max Bethge
+  Modified by Adam Garrett
   MIT Licensed
 
 *********************************/
@@ -59,7 +60,8 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         locationKey: "",
         endpoint: "http://dataservice.accuweather.com/forecasts/v1/daily/5day",
         endpointNow: "http://dataservice.accuweather.com/currentconditions/v1",
-        updateInterval: 60, // minutes
+        endpointHourly: "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour",
+        updateInterval: 120, // minutes
         updateFadeSpeed: 500, // milliseconds
         requestDelay: 0,
         listenerOnly: false,
@@ -92,12 +94,12 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         showPrecipitationSeparator: true,
         showPrecipitationAmount: true,
         showWindSpeed: true,
-        showWindDirection: true,
-        showWindGust: true,
+        showWindDirection: false, // setting to true breaks layout. will fix later.
+        showWindGust: false, // setting to true breaks layout. will fix later
         iconset: "1c",
         mainIconset: defaults.iconset,
-        useAnimatedIcons: true,
-        animateMainIconOnly: true,
+        useAnimatedIcons: false, // readme says this is legacy and to use iconsets 6fa and 6oa instead, so defaulting to false
+        animateMainIconOnly: false, // like 'useAnimatedIcons, this should be deprecated. Instead set mainIconset to to 6oa or 6fa
         showInlineIcons: true,
         mainIconSize: 100,
         forecastTiledIconSize: 70,
@@ -123,8 +125,8 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         label_wind_m: " m/s",
         label_gust_i: " mph",
         label_gust_m: " m/s",
-        label_no_precip: "—",
-        label_no_wind: "—",
+        label_no_precip: "0%",
+        label_no_wind: "0 mph",
         label_precip_separator: " ",
         label_gust_wrapper_prefix: " (",
         label_gust_wrapper_suffix: ")",
@@ -251,6 +253,7 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         //force icon set to mono version whern config.coloured = false
         if (this.config.colored == false) {
             this.config.iconset = this.config.iconset.replace("c", "m");
+            this.config.mainIconset = this.config.mainIconset.replace("c", "m"); // original script did not consider the "current conditions" icon. fixed that here
         }
 
         if (!this.config.socketListenerOnly) {
@@ -287,7 +290,8 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             instanceId: this.identifier,
             requestDelay: this.config.requestDelay,
             endpoint: this.config.endpoint,
-            endpointNow: this.config.endpointNow
+            endpointNow: this.config.endpointNow,
+            endpointHourly: this.config.endpointHourly
         });
 
     },
@@ -388,11 +392,11 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             var displayCounter = 0;
             var currentIndex = this.config.hourlyForecastInterval;
             while (displayCounter < this.config.maxHourliesToShow) {
-                if (this.weatherData.hourly[currentIndex] == null) {
+                if (typeof this.weatherData.Hourly == 'undefined' || this.weatherData.Hourly[currentIndex] == null) {
                     break;
                 }
 
-                hourlies.push(this.forecastItemFactory(this.weatherData.hourly[currentIndex], "hourly"));
+                hourlies.push(this.forecastItemFactoryH(this.weatherData.Hourly[currentIndex], "hourly"));
 
                 currentIndex += this.config.hourlyForecastInterval;
                 displayCounter++;
@@ -455,11 +459,40 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
         };
     },
 
-
     /*
-      Hourly and Daily forecast items are very similar.  So one routine builds the data
-      objects for both.
+      Hourly and Daily forecast items are no longer similar. Two routines are needed.
      */
+     
+     // Hourly Function
+	forecastItemFactoryH: function(fDataH, type) {
+		var fItemH = new Object();
+		
+		fItemH.time = moment(fDataH.EpochDateTime * 1000).format(this.config.label_timeFormat);
+		fItemH.temperature = this.getUnit('temp',fDataH.Temperature.Value); //just display projected temperature for that hour
+
+        // --------- Precipitation ---------
+        var precipProbability = fDataH.PrecipitationProbability;
+        precipProbability = (precipProbability > 0) ? (precipProbability / 100) : precipProbability;
+        
+        var rainValue = fDataH.Rain.Value;
+        var snowValue = fDataH.Snow.Value;
+        fItemH.precipitation = this.formatPrecipitation(precipProbability, rainValue, snowValue);
+        
+		// --------- Wind ---------
+        fItemH.wind = (this.formatWind(fDataH.Wind.Speed.Value, fDataH.Wind.Direction.Degrees, fDataH.WindGust.Speed.Value));
+
+		// --------- Icon ---------
+        if (this.config.useAnimatedIcons && !this.config.animateMainIconOnly) {
+            fItemH.animatedIconId = this.getAnimatedIconId();
+            fItemH.animatedIconName = this.convertAccuWeatherIdToIcon(fDataH.WeatherIcon, fDataH.IconPhrase);
+        }
+        fItemH.iconPath = this.generateIconSrc(this.convertAccuWeatherIdToIcon(fDataH.WeatherIcon, fDataH.IconPhrase));
+		console.log(fDataH);
+		
+		return fItemH;
+	},
+	
+	// Daily and Currently function
     forecastItemFactory: function(fData, type, index = null, min = null, max = null) {
 
         var fItem = new Object();
@@ -473,10 +506,6 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             else if (index === 1 && this.config.showDayAsTomorrowInDailyForecast) fItem.day = this.config.label_tomorrow;
             else fItem.day = this.config.label_days[moment(fData.EpochDate * 1000).format("d")];
 
-        } else { //hourly
-
-            //time (e.g.: "5 PM")
-            fItem.time = moment(fData.EpochDate * 1000).format(this.config.label_timeFormat);
         }
 
         // --------- Icon ---------
@@ -485,11 +514,9 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             fItem.animatedIconName = this.convertAccuWeatherIdToIcon(fData.Day.Icon, fData.Day.IconPhrase);
         }
         fItem.iconPath = this.generateIconSrc(this.convertAccuWeatherIdToIcon(fData.Day.Icon, fData.Day.IconPhrase));
-
+		console.log(fData);
         // --------- Temperature ---------
-        if (type == "hourly") { //just display projected temperature for that hour
-            fItem.temperature = this.getUnit('temp',fData.temp);
-        } else { //display High / Low temperatures
+		//display High / Low temperatures
             fItem.tempRange = this.formatHiLowTemperature(fData.Temperature.Maximum.Value, fData.Temperature.Minimum.Value);
             
             fItem.bars = {
@@ -511,7 +538,6 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             
             fItem.colorStart = '#' + this.interpolateColor(colorLo, colorHi, colorStartPos);
             fItem.colorEnd = '#' + this.interpolateColor(colorLo, colorHi, colorEndPos);
-        }
 
         // --------- Precipitation ---------
 //TODO: get max value from day/night
@@ -709,6 +735,8 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
             return "fog";
         } else if ([1,2].includes(id)) {
             return "clear-day";
+        } else if ([30].includes(id)) {
+			return "hot-day";
         } else if ([3,4,5,6].includes(id)) {
             return "partly-cloudy-day";
         } else if ([7,8].includes(id)) {
@@ -731,9 +759,13 @@ Module.register("MMM-AccuWeatherForecastDeluxe", {
      */
     generateIconSrc: function(icon, mainIcon) {
         if (mainIcon) {
+			console.log("icons/" + this.iconsets[this.config.mainIconset].path + "/" +
+                icon + "." + this.iconsets[this.config.mainIconset].format);
             return this.file("icons/" + this.iconsets[this.config.mainIconset].path + "/" +
                 icon + "." + this.iconsets[this.config.mainIconset].format);
         }
+        console.log("icons/" + this.iconsets[this.config.iconset].path + "/" +
+            icon + "." + this.iconsets[this.config.iconset].format);
         return this.file("icons/" + this.iconsets[this.config.iconset].path + "/" +
             icon + "." + this.iconsets[this.config.iconset].format);
     },

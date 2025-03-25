@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   version="1.0"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="90px"
+   height="90px"
+   viewBox="0 0 90 90"
+   style="enable-background:new 0 0 90 90;"
+   xml:space="preserve"
+   sodipodi:docname="clear-day.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs26243" /><sodipodi:namedview
+   id="namedview26241"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="5.2444444"
+   inkscape:cx="51.769068"
+   inkscape:cy="43.09322"
+   inkscape:window-width="1440"
+   inkscape:window-height="839"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+<g
+   id="g26222"
+   style="fill:#ff6650;fill-opacity:1">
+	<g
+   id="g26220"
+   style="fill:#ff6650;fill-opacity:1">
+		<path
+   style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff6650;fill-opacity:1"
+   d="M45,21.003c-13.253,0-23.997,10.744-23.997,23.997    S31.747,68.997,45,68.997S68.996,58.253,68.996,45S58.253,21.003,45,21.003z M45,62.999c-9.94,0-17.999-8.059-17.999-17.999    S35.06,27.001,45,27.001S62.998,35.06,62.998,45S54.94,62.999,45,62.999z"
+   id="path26218" />
+	</g>
+</g>
+<path
+   style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff6650;fill-opacity:1"
+   d="M16.009,17.423l1.414-1.414c0.781-0.781,2.047-0.781,2.829,0  l4.243,4.242c0.781,0.781,0.781,2.048,0,2.829l-1.415,1.414c-0.781,0.781-2.047,0.781-2.828,0l-4.243-4.243  C15.228,19.47,15.228,18.204,16.009,17.423z"
+   id="path26224" />
+<path
+   style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff6650;fill-opacity:1"
+   d="M46,15h-2c-1.104,0-2-0.896-2-2V7c0-1.104,0.896-2,2-2h2  c1.104,0,2,0.896,2,2v6C48,14.104,47.104,15,46,15z"
+   id="path26226" />
+<path
+   style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff6650;fill-opacity:1"
+   d="M66.92,24.494l-1.414-1.414c-0.781-0.781-0.781-2.048,0-2.829  l4.242-4.242c0.781-0.781,2.048-0.781,2.829,0l1.414,1.414c0.781,0.781,0.781,2.047,0,2.828l-4.243,4.243  C68.968,25.275,67.701,25.275,66.92,24.494z"
+   id="path26228" />
+<path
+   style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff6650;fill-opacity:1"
+   d="M75,46v-2c0-1.104,0.896-2,2-2h6c1.104,0,2,0.896,2,2v2  c0,1.104-0.896,2-2,2h-6C75.896,48,75,47.104,75,46z"
+   id="path26230" />
+
+<path
+   style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff6650;fill-opacity:1"
+   d="M46,85h-2c-1.104,0-2-0.896-2-2v-6c0-1.104,0.896-2,2-2h2  c1.104,0,2,0.896,2,2v6C48,84.104,47.104,85,46,85z"
+   id="path26234" />
+<path
+   style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff6650;fill-opacity:1"
+   d="M17.423,73.991l-1.414-1.414c-0.781-0.781-0.781-2.047,0-2.828  l4.242-4.243c0.781-0.781,2.048-0.781,2.829,0l1.415,1.414c0.781,0.781,0.781,2.048,0,2.829l-4.243,4.242  C19.47,74.772,18.204,74.772,17.423,73.991z"
+   id="path26236" />
+<path
+   style="fill-rule:evenodd;clip-rule:evenodd;fill:#ff6650;fill-opacity:1"
+   d="M5,46v-2c0-1.104,0.896-2,2-2h6c1.104,0,2,0.896,2,2v2  c0,1.104-0.896,2-2,2H7C5.896,48,5,47.104,5,46z"
+   id="path26238" />
+<path
+   d="m 72.457702,80.348842 a 7.5,7.5 0 0 0 7.5,-7.5 c 0,-0.866 -0.23,-1.697 -0.5,-2.47 -1.667,1.647 -2.933,2.47 -3.8,2.47 3.995,-7 1.8,-10 -4.2,-14 0.5,5 -2.796,7.274 -4.138,8.537 a 7.5,7.5 0 0 0 5.138,12.963 z m 0.71,-17.765 c 3.241,2.75 3.257,4.887 0.753,9.274 -0.761,1.333 0.202,2.991 1.737,2.991 0.688,0 1.384,-0.2 2.119,-0.595 a 5.5,5.5 0 1 1 -9.087,-5.412 c 0.126,-0.118 0.765,-0.685 0.793,-0.71 0.424,-0.38 0.773,-0.717 1.118,-1.086 1.23,-1.318 2.114,-2.78 2.566,-4.462 z"
+   fill-rule="nonzero"
+   id="path561"
+   style="fill:#ff6650;fill-opacity:1" /></svg>

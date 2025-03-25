@@ -1,5 +1,11 @@
 # MMM-AccuWeatherForecastDeluxe
 
+Known bugs:
+<ul>
+	<li>Setting showWindDirection and showWindGust to <code>true</code> breaks the layout in tile mode</li>
+</ul>
+
+
 This is a [MagicMirror²](https://magicmirror.builders) module that displays current, hourly and daily forecast information using data from the [AccuWeather](https://www.accuweather.com).
 
 | Tiled Layouts | Bars Layout (daily forecast only) |
@@ -9,7 +15,7 @@ This is a [MagicMirror²](https://magicmirror.builders) module that displays cur
 ## Installation
 
 1. Navigate into your MagicMirror's `modules` folder and execute
-   `git clone https://github.com/maxbethge/MMM-AccuWeatherForecastDeluxe`.
+   `git clone https://github.com/BigBot89/MMM-AccuWeatherForecastDeluxe`.
 2. Enter the new `MMM-AccuWeatherForecastDeluxe` directory and execute
    `npm install`.
 
@@ -23,7 +29,8 @@ At a minimum you need to supply the following required configuration parameters:
 You can request an API key to access data here:
 <https://developer.accuweather.com/packages>
 
-Free tier is fine -- by itself, a single instance of this module will not make any where near 50 request on one day with the default `updateInterval` of `60`. However, if the `updateInterval` is more frequent, create another Accuweather account to get a second API key and add to `apiKey2`.
+AccuWeather free tier no longer allows 1000 requests per day but instead limits you to 50.
+Free tier is fine -- by itself, a single instance of this module will not make 50 requests in one day with the default `updateInterval` of `120`. However, if the `updateInterval` is more frequent, create another Accuweather account to get a second API key and add to `apiKey2`.
 
 Find the locationKey using the Accuweather search API
 <http://dataservice.accuweather.com/locations/v1/cities/search?apikey={apiKey}&q={cityName}>
@@ -46,10 +53,7 @@ Find the locationKey using the Accuweather search API
     ignoreToday: true,
     showDayAsTomorrowInDailyForecast: true,
     showPrecipitationProbability: false,
-    showWindDirection: false,
-    showWindGust: false,
     iconset: "4c",
-    useAnimatedIcons: false,
     label_high: "",
     label_low: "",
   }
@@ -80,7 +84,7 @@ You can use the `listenerOnly` option with multiple instances, so that only a pr
     </tr>
     <tr>
       <td><code>updateInterval</code></td>
-      <td>How frequently, in minutes, to poll for data. Be careful not to set this too frequent so that you don't exceed the 1000 free requests per day cap. (†SEE NOTE ABOUT MULTIPLE INSTANCES)<br><br><strong>Type</strong> <code>Number</code><br>Defaults to <code>10</code></td>
+      <td>How frequently, in minutes, to poll for data. Be careful not to set this too frequent so that you don't exceed the 50 free requests per day cap. (†SEE NOTE ABOUT MULTIPLE INSTANCES)<br><br><strong>Type</strong> <code>Number</code><br>Defaults to <code>10</code></td>
     </tr>
     <tr>
       <td><code>requestDelay</code></td>
@@ -212,11 +216,11 @@ You can use the `listenerOnly` option with multiple instances, so that only a pr
     </tr>
     <tr>
       <td><code>showWindDirection</code></td>
-      <td>Whether to show wind direction. This affects current conditions, hourly and daily forecasts<br><br><strong>Type</strong> <code>Boolean</code><br>Defaults to <code>true</code></td>
+      <td><strong>Setting this to <code>true</code> breaks the layout. Will fix later.</strong><p>Whether to show wind direction. This affects current conditions, hourly and daily forecasts<br><br><strong>Type</strong> <code>Boolean</code><br>Defaults to <code>true</code></td>
     </tr>
     <tr>
       <td><code>showWindGust</code></td>
-      <td>Whether to show wind gust information. This affects current conditions, hourly and daily forecasts<br><br><strong>Type</strong> <code>Boolean</code><br>Defaults to <code>true</code></td>
+      <td><strong>Setting this to <code>true</code> breaks the layout. Will fix later.</strong><p>Whether to show wind gust information. This affects current conditions, hourly and daily forecasts<br><br><strong>Type</strong> <code>Boolean</code><br>Defaults to <code>true</code></td>
     </tr>
     <tr>
       <td><code>iconset</code></td>
@@ -228,11 +232,11 @@ You can use the `listenerOnly` option with multiple instances, so that only a pr
     </tr>
     <tr>
       <td><code>useAnimatedIcons</code></td>
-      <td> ***<strong>LEGACY, please use icon set '6fa' or '6oa' for animated icons***</strong> <p>Whether to use the Dark Sky's own animated icon set.  When set to true, this will override your choice for <code>iconset</code>. However, flat icons will still be used in some instances.  For example if you set the <code>animateMainIconOnly</code> parameter to true, daily and hourly forecasts will not be animated and instead will use your choice for <code>iconset</code>.  Inline icons (i.e. used to prefix precipitation and wind information) will always be flat.  A good <code>iconset</code> match for the animated set is <code>1c</code>.<br><br><strong>Type</strong> <code>Boolean</code><br>Defaults to <code>true</code></td>
+      <td> ***<strong>LEGACY, please use icon set '6fa' or '6oa' for animated icons***</strong> <p>Whether to use the Dark Sky's own animated icon set.  When set to true, this will override your choice for <code>iconset</code>. However, flat icons will still be used in some instances.  For example if you set the <code>animateMainIconOnly</code> parameter to true, daily and hourly forecasts will not be animated and instead will use your choice for <code>iconset</code>.  Inline icons (i.e. used to prefix precipitation and wind information) will always be flat.  A good <code>iconset</code> match for the animated set is <code>1c</code>.<br><br><strong>Type</strong> <code>Boolean</code><br>Defaults to <code>false</code></td>
     </tr>
     <tr>
       <td><code>animateMainIconOnly</code></td>
-      <td>When set to <code>true</code>, only the main current conditions icon is animated. The rest use your choice for <code>iconset</code> (<code>1c</code> is a good match for the animated icon).  If you are running on a low-powered device like a Raspberry Pi, performance may suffer if you set this to <code>false</code>.  In my testing on a Pi 3b, enabling this ramped up CPU temperature by 15° - 20°, and fade transitions were not smooth.<br><br><strong>Type</strong> <code>Boolean</code><br>Defaults to <code>true</code></td>
+      <td> ***<strong>LEGACY, please use icon set '6fa' or '6oa' for animated icons***</strong> <p></p>When set to <code>true</code>, only the main current conditions icon is animated. The rest use your choice for <code>iconset</code> (<code>1c</code> is a good match for the animated icon).  If you are running on a low-powered device like a Raspberry Pi, performance may suffer if you set this to <code>false</code>.  In my testing on a Pi 3b, enabling this ramped up CPU temperature by 15° - 20°, and fade transitions were not smooth.<br><br><strong>Type</strong> <code>Boolean</code><br>Defaults to <code>false</code></td>
     </tr>
     <tr>
       <td><code>showInlineIcons</code></td>
@@ -456,9 +460,7 @@ Options for specifying the decimal precision for various measurements. OpenWeath
     ignoreToday: true,
     showPrecipitationProbability: false,
     showPrecipitationSeparator: false,
-    showWindGust: false,
     iconset: "4c",
-    useAnimatedIcons: false,
     label_ordinals: ['↓', '↙', '←', '↖', '↑', '↗', '→', '↘'],
     label_high: "",
     label_low: "",
@@ -491,10 +493,7 @@ Options for specifying the decimal precision for various measurements. OpenWeath
     showPrecipitationSeparator: false,
     showPrecipitationAmount: false,
     showWindSpeed: false,
-    showWindDirection: false,
-    showWindGust: false,
     iconset: "4c",
-    useAnimatedIcons: false,
     label_high: "",
     label_low: "",
   }
@@ -526,10 +525,7 @@ Options for specifying the decimal precision for various measurements. OpenWeath
     showPrecipitationSeparator: false,
     showPrecipitationAmount: false,
     showWindSpeed: false,
-    showWindDirection: false,
-    showWindGust: false,
     iconset: "3m",
-    useAnimatedIcons: false,
     label_high: "",
     label_low: "",
   }
@@ -554,10 +550,7 @@ Options for specifying the decimal precision for various measurements. OpenWeath
     ignoreToday: true,
     showDayAsTomorrowInDailyForecast: true,
     showPrecipitationProbability: false,
-    showWindDirection: false,
-    showWindGust: false,
     iconset: "4c",
-    useAnimatedIcons: false,
     label_high: "",
     label_low: "",
   }
@@ -600,6 +593,9 @@ to be coloured<br />
 **Weather Icons by Thom**<br />
 (Designed for DuckDuckGo)<br />
 <https://dribbble.com/shots/1832162-Weather-Icons>
+	
+**Fire Icon by RemixIcon<br />
+<https://www.iconfinder.com/remix-icon>
 
 Sets 4 and 5 were found on Graphberry, but I couldn't find
 the original artists.<br />
