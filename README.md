@@ -15,7 +15,7 @@ This is a [MagicMirror²](https://magicmirror.builders) module that displays cur
 ## Installation
 
 1. Navigate into your MagicMirror's `modules` folder and execute
-   `git clone https://github.com/BigBot89/MMM-AccuWeatherForecastDeluxe`.
+   `git clone https://github.com/maxbethge/MMM-AccuWeatherForecastDeluxe`.
 2. Enter the new `MMM-AccuWeatherForecastDeluxe` directory and execute
    `npm install`.
 
