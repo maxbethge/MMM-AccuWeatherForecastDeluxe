@@ -1,5 +1,9 @@
 # MMM-AccuWeatherForecastDeluxe
 
+# >>>>>>>>>>>>> NOTES >>>>>>>>>>>>>
+*It looks like AccuWeather has finally turned off their free accounts and they only have a 14-day trial available without a paid account. This might be the end of the road for this module :(*
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 Known bugs:
 <ul>
 	<li>Setting showWindDirection and showWindGust to <code>true</code> breaks the layout in tile mode</li>
